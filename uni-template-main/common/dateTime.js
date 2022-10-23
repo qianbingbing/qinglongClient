@@ -1,3 +1,4 @@
+// 格式化数字
 let formatNumber = function (n) {
   n = n.toString()
   return n[1] ? n : '0' + n
@@ -53,7 +54,19 @@ let gmtToStr = function(time){
             dt.getSeconds()
         return Str
 }
+
+//计算cookie剩余时间
+let remainingTime = function(time){
+	let dt = new Date(time)
+	let nowDate = new Date()
+	let time1 = dt.getTime()
+	let time2 = nowDate.getTime()
+	let dayCount =Math.round((Math.abs(time2-time1))/1000/60/60/24)
+	let remainingTime = 30 - dayCount
+	return remainingTime
+}
 module.exports = {
   dateFormat: dateFormat,
   gmtToStr:gmtToStr,
+  remainingTime:remainingTime,
 };

@@ -176,6 +176,7 @@ module.exports = {
 	cutText,
 	dateFormat: dateTime.dateFormat,
 	gmtToStr: dateTime.gmtToStr,
+	remainingTime: dateTime.remainingTime,
 	sexIdcardFilter,
 	IDcardHide,
 	telHide,

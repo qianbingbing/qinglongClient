@@ -8,27 +8,28 @@
 				<view class="tag">
 					<text class="text" v-if ="item.status===0">启用</text>
 					<text class="red" v-if ="item.status===1">禁用</text>
-					<text class="text"> ck有效</text>
+					<text class="text"> 剩余{{item.timestamp | remainingTime}}天</text>
 				</view>
 			</view>
 			<view class="bottom">
-				{{item.timestamp}}
+				更新时间: {{item.timestamp | gmtToStr}}
 			</view>
 			<view class="bottom">
 				{{item.value}}
-				<u-icon class='u-m-l-20' name="reload" color="#4197ff" size="80" @tap="navitoWebView(item._id)"></u-icon>
+				<u-icon class='u-m-l-5' name="edit-pen" color="#4197ff" size="50" @tap="navitoWebView(item._id)"></u-icon>
+				<u-icon class='u-m-l-5' name="checkmark-circle" color="#4197ff" size="50" v-if ="item.status===1" @tap="enable(item._id)"></u-icon>
+				<u-icon class='u-m-l-5' name="close-circle" color="#4197ff" size="50" v-if ="item.status===0" @tap="disable(item._id)"></u-icon>
 			</view>
 		</view>
-		<view class="addSite" @tap="flashCookieTime()">
+		<view class="addSite" @tap="addCookie()">
 			<view class="add">
-				<u-icon name="reload" color="#ffffff" class="icon" :size="20"></u-icon>刷新cookie有效性
+				<u-icon name="reload" color="#ffffff" class="icon" :size="20"></u-icon>增加CK
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	
 	export default {
 		data() {
 			return {
@@ -89,16 +90,35 @@
 					getApp().globalData.updatedCookie = ''
 				});
 			},
-			flashCookieTime(data){
+			addCookie(data){
 				uni.showToast({
 					icon:'error',
 					title:'暂未实现',
 					duration:2000
 				})
+			},
+			disable(itemId){
+				var itemIdList = [itemId]
+				this.$apis.disableEnv(itemIdList).then(res => {
+					uni.showToast({
+						title:'已禁用',
+						duration:2000
+					})
+					location.reload()
+				});
+			},
+			enable(itemId){
+				var itemIdList = [itemId]
+				this.$apis.enableEnv(itemIdList).then(res => {
+					uni.showToast({
+						title:'已启用',
+						duration:2000
+					})
+					location.reload()
+				});
 				
-			}
+			},
 		},
-		
 	}
 </script>
 
