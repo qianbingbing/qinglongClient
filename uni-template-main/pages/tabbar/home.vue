@@ -26,6 +26,13 @@
 				<u-icon name="reload" color="#ffffff" class="icon" :size="20"></u-icon>增加CK
 			</view>
 		</view>
+		<u-modal v-model="show" :title-style="{color: 'red'}">
+					<view class="slot-content">
+						<u-field v-model="名称" label="cookie" placeholder="JD_COOKIE" required :error-message="必填字段">JD_COOKIE</u-field>
+						<u-field v-model="值" label="值" placeholder="请输入cookie值" required :error-message="必填字段"></u-field>
+						<u-field v-model="备注" label="备注" placeholder="请输入备注"></u-field>
+					</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -89,6 +96,7 @@
 					})
 					getApp().globalData.updatedCookie = ''
 				});
+				
 			},
 			addCookie(data){
 				uni.showToast({
@@ -104,7 +112,7 @@
 						title:'已禁用',
 						duration:2000
 					})
-					location.reload()
+					this.$forceUpdate()
 				});
 			},
 			enable(itemId){
@@ -114,7 +122,7 @@
 						title:'已启用',
 						duration:2000
 					})
-					location.reload()
+					this.$forceUpdate()
 				});
 				
 			},
@@ -148,7 +156,7 @@ page{
 	left: 80rpx;
 	background-color: red;
 	border-radius: 60rpx;
-	margin-top:-40px;//这一句和上面一句配合令层永远处在屏幕最下方
+	//margin-top:-90px;//这一句和上面一句配合令层永远处在屏幕最下方
 	font-size: 30rpx;
 .add{
 		display: flex;
